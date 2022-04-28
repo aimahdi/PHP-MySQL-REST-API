@@ -2,6 +2,7 @@
 
     include_once "../controller/database.php";
     include_once "../encoder/json_encoder.php";
+    include_once "../models/employee.php";
 
     if($_SERVER['REQUEST_METHOD'] != 'PUT'){
 
@@ -14,21 +15,34 @@
     
         $data = json_decode($data_in_json, true);
 
-        // foreach($data as $key => $value){
-            echo "$key - $value";
+        $updatedEmployee = new Employee();
+
+        if(isset($data["id"])){
+            $updatedEmployee->setId($data["id"]);
+        }
+        if(isset($data["first_name"])){
+            $updatedEmployee->setFirstName($data["first_name"]);
+        }
+        if(isset($data["last_name"])){
+            $updatedEmployee->setLastName($data["last_name"]);
+        }
+        if(isset($data["email"])){
+            $updatedEmployee->setEmail($data["email"]);
+        }
+        if(isset($data["age"])){
+            $updatedEmployee->setAge($data["age"]);
+        }
+        if(isset($data["salary"])){
+            $updatedEmployee->setSalary($data["salary"]);
+        }
+        if(isset($data["designation"])){
+            $updatedEmployee->setId($data["designation"]);
         }
 
-        var_dump($data);
+        $connect->updateEmployee($updatedEmployee);
 
-    //     if(isset($data['id'])){
-    //         $id = $data['id'];
-
-    // $connect->deleteEmployee($id);
-    //     }else{
-    //         json_encoder("400 Error", 
-    //         ['error'=> "Please provide an id to delete data"]);
-    //     }
     }
+
 
    
 

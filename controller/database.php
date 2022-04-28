@@ -91,6 +91,8 @@ class Database
                 ['success' => "0 results"]
             );
         }
+
+        return $employee;
     }
 
     public function getAllEmployee()
@@ -141,8 +143,61 @@ class Database
         }
     }
 
-    public function updateEmployee($employee){
-        
+    public function updateEmployee($updatedEmployee)
+    {
+
+        $id = $updatedEmployee->getID();
+
+        $employee = $this->getEmployee($id);
+
+        $first_name = $updatedEmployee->getFirstName();
+        $last_name = $updatedEmployee->getLastName();
+        $email = $updatedEmployee->getEmail();
+        $age = $updatedEmployee->getAge();
+        $salary = $updatedEmployee->getSalary();
+        $designation = $updatedEmployee->getDesignation();
+
+
+        if (isset($first_name)) {
+            $employee->setFirstName($updatedEmployee->getFirstName());
+        }
+        if (isset($last_name)) {
+            $employee->setLastName($updatedEmployee->getLastName());
+        }
+        if (isset($email)) {
+            $employee->setEmail($updatedEmployee->getEmail());
+        }
+        if (isset($age)) {
+            $employee->setAge($updatedEmployee->getAge());
+        }
+        if (isset($salary)) {
+            $employee->setSalary($updatedEmployee->getSalary());
+        }
+        if (isset($designation)) {
+            $employee->setDesignation($updatedEmployee->getDesignation());
+        }
+
+
+        $first_name = $employee->getFirstName();
+        $last_name = $employee->getLastName();
+        $email = $employee->getEmail();
+        $age = $employee->getAge();
+        $salary = $employee->getSalary();
+        $designation = $employee->getDesignation();
+
+        $query = "UPDATE employee SET `first_name` = " . "'$first_name'" . ", `last_name` = " . "'$last_name'" . ", `email` = " . "'$email'" . ", `age` = " . "'$age'" . ", `salary` = " . "'$salary'" . ", `designation` = " . "'$designation'" . " WHERE `id` = " . $id;
+
+        if ($this->connection->query($query) === TRUE) {
+            json_encoder(
+                "200 OK",
+                ['success' => "updated employee"]
+            );
+        } else {
+            json_encoder(
+                "200 OK",
+                ['success' => "Error updating record: " . $this->connection->error]
+            );
+        }
     }
 
     public function deleteEmployee($id)
