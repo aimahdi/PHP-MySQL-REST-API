@@ -1,5 +1,6 @@
 <?php
 
+//Employee Class
 class Employee implements JsonSerializable
 {
     private $id;
